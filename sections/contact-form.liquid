@@ -99,7 +99,7 @@ contact_url.map(v => {
 const url = `/products/${param.id}.js`;
 
 async function insertContactForm() {
-			if (~location.search.indexOf('variant') === 0) {
+              if (~location.search.indexOf('variant') === 0) {
 				return;
 			}
 
@@ -116,7 +116,7 @@ async function insertContactForm() {
 			document.querySelector('[name="contact[Comment]"]').value = str;
 		} 
   
-insertContactForm();  
+insertContactForm('value');  
 </script>
 
 {% schema %}
