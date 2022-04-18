@@ -38,7 +38,7 @@ if (!customElements.get('product-form')) {
             return;
           }
 		if ( url === 'https://wrapping-test.myshopify.com/cart') {
-        console.log('this is cart')
+        console.log('this is cart');
         } else {
            this.cartNotification.renderContents(response);       
         }
