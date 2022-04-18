@@ -19,8 +19,150 @@
 
 {% schema %}
 {
-  "name": "t:sections.main-product.name",
-  "tag": "section",
-  "class": "section"
+  "name": "熨斗・ラッピング",
+  "settings": [
+    {
+      "type": "select",
+      "id": "description_style",
+      "label": "Description position",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Next to media"
+        },
+        {
+          "value": "full",
+          "label": "Below media"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "id": "gift_product",
+      "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "social_enable",
+      "label": "Enable social sharing",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Position",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Size",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_position",
+      "label": "Thumbnail position",
+      "default": "beside",
+      "options": [
+        {
+          "value": "beside",
+          "label": "Next to media"
+        },
+        {
+          "value": "below",
+          "label": "Below media"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "thumbnail_arrows",
+      "label": "Show thumbnail arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "Enable video looping",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_video_style",
+      "label": "Video style",
+      "default": "muted",
+      "options": [
+        {
+          "value": "muted",
+          "label": "Video without sound"
+        },
+        {
+          "value": "unmuted",
+          "label": "Video with sound"
+        }
+      ],
+      "info": "Video with sound will not autoplay"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "noshi_group",
+      "name": "熨斗の種類",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "熨斗の種類"
+        },
+        {
+          "type": "textarea",
+          "id": "noshi_list",
+          "label": "Noshi list (one per line)",
+          "default": "First noshi \nSecond noshi \nThird noshi",
+          "info": "熨斗について"
+        }
+      ]
+    }],
+  "presets": [
+    {
+      "name": "Gift product",
+      "category": "Product"
+    }
+  ]
 }
+
 {% endschema %}
