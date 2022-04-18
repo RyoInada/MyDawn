@@ -30,13 +30,6 @@
         "show_cart_note": false
       }
     },
-    "cart-wrapping": {
-      "type": "main-cart-wrapping",
-      "disabled": true,
-      "settings": {
-        "gift_product": "ラベル"
-      }
-    },
     "1650268781a7bfc927": {
       "type": "main-cart-wrapping2",
       "blocks": {
@@ -133,7 +126,6 @@
   "order": [
     "cart-items",
     "cart-footer",
-    "cart-wrapping",
     "1650268781a7bfc927",
     "featured-collection"
   ]
