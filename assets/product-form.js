@@ -11,7 +11,7 @@ if (!customElements.get('product-form')) {
       } else {
         this.cartNotification = document.querySelector('cart-notification');
       }
-//       this.cartNotification = document.querySelector('cart-notification');
+      this.cartNotification = document.querySelector('cart-notification');
     }
 
     onSubmitHandler(evt) {
@@ -20,7 +20,7 @@ if (!customElements.get('product-form')) {
       if (submitButton.classList.contains('loading')) return;
 
       this.handleErrorMessage();
-//       this.cartNotification.setActiveElement(document.activeElement);
+      this.cartNotification.setActiveElement(document.activeElement);
 
       submitButton.setAttribute('aria-disabled', true);
       submitButton.classList.add('loading');
