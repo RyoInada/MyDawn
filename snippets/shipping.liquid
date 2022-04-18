@@ -1,0 +1,138 @@
+{% if settings.show_shipping_date_selector %}
+<div class="cart__item-row">
+    <h2 class="h5">ご希望の方は、お届け日を選択してください。</h2>
+    <p class="datePicker">
+        <input type="text" name="attributes[delivery_date]" class="data" id="attributes-shipping-date" placeholder="例）2022/01/01" autocomplete="off" value="{{ cart.attributes['delivery_date'] }}">
+    </p>
+
+    {% comment %}
+    {{ 'cart.general.select_deliv_timezone' | t }}
+    {{ 'cart.general.select_deliv_timezone_default' | t }}
+    {% endcomment %}
+    <h2 class="h5">ご希望の方は、配達時間帯を選択してください。</h2>
+    <p>
+        <select id="attributes-shipping-date-time" name="attributes[delivery_time]">
+            <option value="">指定なし</option>
+            <option value="0812" {% if cart.attributes['delivery_time'] == '0812' %}selected{% endif %}>午前中</option>
+            <option value="1214" {% if cart.attributes['delivery_time'] == '1214' %}selected{% endif %}>12時頃～14時頃</option>
+            <option value="1416" {% if cart.attributes['delivery_time'] == '1416' %}selected{% endif %}>14時頃～16時頃</option>
+            <option value="1618" {% if cart.attributes['delivery_time'] == '1618' %}selected{% endif %}>16時頃～18時頃</option>
+            <option value="1820" {% if cart.attributes['delivery_time'] == '1820' %}selected{% endif %}>18時頃～20時頃</option>
+            <option value="1921" {% if cart.attributes['delivery_time'] == '1921' %}selected{% endif %}>19時頃～21時頃</option>
+            <option value="2021" {% if cart.attributes['delivery_time'] == '2021' %}selected{% endif %}>20時頃～21時頃</option>
+        </select>
+    </p>
+</div>
+
+{% comment %}
+@see https://flatpickr.js.org/
+@see https://tr.you84815.space/flatpickr/examples.html#disabling-all-dates-except-select-few
+{% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+<script>
+                       
+let start_day = Number("{{ settings.start_shipping_date | plus: add_date }}");    // 配送日指定（最短）
+let end_day = Number("{{ settings.end_shipping_date | plus: add_date }}");        // 配送日指定（最長）
+                       
+let disable_from = new Date("{{settings.disable_shipping_date_from}}");           // 定休日（開始日）
+let disable_to = new Date("{{settings.disable_shipping_date_to}}");               // 定休日（終了日）
+let disable_dates = "{{settings.disable_dates}}";                                       // 定休日
+let disable_days = "{{settings.disable_days}}";                                         // 定休日（曜日）
+let business_dates = "{{settings.business_dates}}";                                     // 臨機営業日
+
+//臨時営業日リスト作成
+let businessDates = business_dates.split(',');
+
+// 定休日（曜日）のリスト作成
+let disabledDaysTmp = disable_days.split(',');
+let disabledDays = disabledDaysTmp.map(function(element){
+    return filterDays(element);
+});
+
+// 定休日（開始日）〜定休日（終了日）から各日付を配列で取得
+let allDisableDates = [];
+for (let d = disable_from; d <= disable_to; d.setDate(d.getDate()+1)) {
+    const day = d.getFullYear() + '-' + ('00' + (d.getMonth()+1)).slice(-2) + '-' + ('00' + (d.getDate())).slice(-2);
+    allDisableDates.push(day);
+}
+
+// カンマ区切りの定休日をマージ　
+let disabledDates = disable_dates.split(',');
+disabledDates.map((date) => {
+    const d = new Date(date);
+    const day = d.getFullYear() + '-' + ('00' + (d.getMonth()+1)).slice(-2) + '-' + ('00' + (d.getDate())).slice(-2);
+    allDisableDates.push(day);
+})
+allDisableDates = allDisableDates.concat(disabledDates);
+
+let today_date = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
+//17時以降かチェック
+let additional_day_count = today_date.getHours() >= {{settings.change_business_day_time}}? 1: 0;
+let first_check_date = new Date(today_date.setDate(today_date.getDate() + additional_day_count));
+let count = 0;
+
+while (
+    allDisableDates.includes(first_check_date.getFullYear() + '-' + ('00' + (first_check_date.getMonth()+1)).slice(-2) + '-' + ('00' + (first_check_date.getDate())).slice(-2))
+    || disabledDays.includes(first_check_date.getDay())
+    ) {
+    if (businessDates.includes(first_check_date.getFullYear() + '-' + ('00' + (first_check_date.getMonth()+1)).slice(-2) + '-' + ('00' + (first_check_date.getDate())).slice(-2))) {
+        break;
+    }
+    first_check_date.setDate(first_check_date.getDate()+1);
+    count++;
+}
+
+  let from_date = new Date(today_date.setDate(today_date.getDate() + start_day + count-1));
+//   let to_date = new Date(today_date.setDate(today_date.getDate() + end_day + count-1));
+  let to_date = new Date(today_date.setDate(today_date.getDate() + end_day - start_day ));
+
+
+
+// タイムアウト
+const promise = (fn, time = 3000) => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(fn), time)
+    })
+}
+
+    promise((() => {
+        const flatpickrCSS = document.createElement('link');
+        flatpickrCSS.rel = 'stylesheet', flatpickrCSS.href = 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css';
+        document.head.appendChild(flatpickrCSS);
+    })())
+        .then(() => {
+            flatpickr('.data', {
+                enable: [
+                    {
+                        from: from_date,
+                        to    : to_date,
+                    }
+                ],
+                dateFormat: 'Y/m/d',
+                locale: "ja",
+            });
+        })
+
+function filterDays(item) {
+    switch (item) {
+        case '月':
+            return 1;
+        case '火':
+            return 2;
+        case '水':
+            return 3;
+        case '木':
+            return 4;
+        case '金':
+            return 5;
+        case '土':
+            return 6;
+        case '日':
+            return 0;
+        default:
+            return;
+    }
+}
+</script>
+{% endif %}

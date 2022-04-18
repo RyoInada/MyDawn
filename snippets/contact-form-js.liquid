@@ -1,0 +1,76 @@
+<script>
+  
+;; ($ => {
+	class getProduct {
+		constructor() {
+			if (~location.pathname.indexOf('product') < 0) {
+           		{% if product.tags contains '注文不可' %}
+              		this.setContactButton();
+           		{%- endif -%}
+           }
+
+			if (~location.pathname.indexOf('contact') < 0) {
+				this.insertContactForm();
+			}
+		}
+		
+		setContactButton() {
+			const target = $.querySelector('#form-button-point');
+			if (target === null) {
+				return;
+			}
+
+			// Create Contact Button
+			const button = Object.assign(
+				$.createElement('button'),
+				{ className: 'btn btn--secondary', innerHTML: '商品についてのお問い合わせ', type: 'button', variant: '{{ product.variants[0].id }}' }
+			);
+			button.style.cssText = 'margin: 10px 0 0; width: 100%;';
+          
+                 
+			button.addEventListener('click', () => {
+				// Check Variant ID
+				const insertVariant = v => {
+					const buffer = v.split('=');
+					if (buffer[0] === 'variant') {
+						button.variant = buffer[1];
+					}
+				};
+				location.search.replaceAll('?', '').split('&').map(insertVariant);
+
+				window.open(`/pages/contact?id={{ product.handle }}&variant=${button.variant}`, '_blank');
+			});
+
+			target.append(button);
+		}
+
+		async insertContactForm() {
+			if (~location.search.indexOf('variant') === 0) {
+				return;
+			}
+
+			// Get Product Param
+			const param = {};
+			location.search.replace('?', '').split('&').map(v => {
+				const buffer = v.split('=');
+				param[buffer[0]] = buffer[1];
+			});
+  
+			// Get Product Date & filting
+			const product = await (await fetch(`/products/${param.id}.js`)).json();
+			const focus = product.variants.filter(i => i.id === Number(param.variant));
+
+			// Insert Textarea
+			const str = `▼ 商品についてのお問い合わせ
+			商品名 : ${product.title}
+			タイプ : ${focus[0].title != 'Default Title'? focus[0].title: ''}
+			ＳＫＵ : ${focus[0].sku}
+			ＵＲＬ : ${location.origin + product.url}?variant=${param.variant}`.split('\n').map(l => l.trim()).join('\n');
+			$.querySelector('[name="contact[Comment]"]').value = str;
+		}
+	};
+
+	window.addEventListener('DOMContentLoaded', () => new getProduct());
+})(document);
+
+</script>
