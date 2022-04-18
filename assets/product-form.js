@@ -6,11 +6,6 @@ if (!customElements.get('product-form')) {
       this.form = this.querySelector('form');
       this.form.querySelector('[name=id]').disabled = false;
       this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
-      if ( url === 'https://wrapping-test.myshopify.com/cart') {
-        console.log('this is cart')
-      } else {
-        this.cartNotification = document.querySelector('cart-notification');
-      }
       this.cartNotification = document.querySelector('cart-notification');
     }
 
@@ -42,8 +37,11 @@ if (!customElements.get('product-form')) {
             this.handleErrorMessage(response.description);
             return;
           }
-
-//           this.cartNotification.renderContents(response);
+		if ( url === 'https://wrapping-test.myshopify.com/cart') {
+        console.log('this is cart')
+        } else {
+           this.cartNotification.renderContents(response);       
+        }
         })
         .catch((e) => {
           console.error(e);
