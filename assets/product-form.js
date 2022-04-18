@@ -48,6 +48,7 @@ if (!customElements.get('product-form')) {
           submitButton.removeAttribute('aria-disabled');
           this.querySelector('.loading-overlay__spinner').classList.add('hidden');
         });
+  		window.location.reload();
     }
 
     handleErrorMessage(errorMessage = false) {
