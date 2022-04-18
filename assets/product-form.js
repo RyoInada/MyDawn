@@ -49,7 +49,7 @@ if (!customElements.get('product-form')) {
           this.querySelector('.loading-overlay__spinner').classList.add('hidden');
       	  const url = location.href;
       if ( url === 'https://wrapping-test.myshopify.com/cart') {
-        window.location.reload();
+        window.location.href = 'https://wrapping-test.myshopify.com/cart';
       }
         });
     }
