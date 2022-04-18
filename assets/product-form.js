@@ -61,4 +61,5 @@ if (!customElements.get('product-form')) {
       }
     }
   });
+  		window.location.reload();
 }
