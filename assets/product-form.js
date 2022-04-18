@@ -47,7 +47,10 @@ if (!customElements.get('product-form')) {
           submitButton.classList.remove('loading');
           submitButton.removeAttribute('aria-disabled');
           this.querySelector('.loading-overlay__spinner').classList.add('hidden');
-        		window.location.reload();
+      	  const url = location.href;
+      if ( url === 'https://wrapping-test.myshopify.com/cart') {
+        window.location.reload();
+      }
         });
     }
 
