@@ -38,7 +38,7 @@ if (!customElements.get('product-form')) {
             return;
           }
 
-//           this.cartNotification.renderContents(response);
+          this.cartNotification.renderContents(response);
         })
         .catch((e) => {
           console.error(e);
