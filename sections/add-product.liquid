@@ -1,0 +1,50 @@
+{%- assign product = all_products[section.settings.featured_product] -%}
+{% form "product", product %}
+<img src="https://cdn.shopify.com/s/files/1/0477/4435/2418/{{product.featured_image}}" class="image-featured" alt="">
+<p>
+<span class="product-description-title">{{product.title}}<br></span>
+<br>
+{{product.description}}
+<br>
+<br>
+</p>
+<select name="id">
+{% for variant in product.variants %}
+<option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+{% endfor %}
+</select>
+<button
+class="btn-submit btn product-btn"
+type="submit"
+name="add">
+{{ 'products.product.add_to_cart' | t }}
+</button>
+{% endform %}
+<style>
+.shopify-product-form{
+width: 300px;
+border: 1px solid black;
+padding: 20px;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+.image-featured{
+width: 300px;
+}
+</style>
+{% schema %}
+{
+"name": {
+"ja": "Pages商品埋め込み"
+},
+"settings": [
+{
+"type": "product",
+"id": "featured_product",
+"label": {
+"ja": "商品"
+}
+}
+]
+}
+{% endschema %}
