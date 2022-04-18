@@ -108,7 +108,7 @@ async function insertContactForm() {
 			const focus = product.variants.filter(i => i.id === Number(param.variant));
 
 			// Insert Textarea
-			const str = `▼ 商品についてのお問い合わせ
+			let str = `▼ 商品についてのお問い合わせ
 			商品名 : ${product.title}
 			タイプ : ${focus[0].title != 'Default Title'? focus[0].title: ''}
 			ＳＫＵ : ${focus[0].sku}
