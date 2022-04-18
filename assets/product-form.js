@@ -9,7 +9,7 @@ if (!customElements.get('product-form')) {
       if ( url === 'https://wrapping-test.myshopify.com/cart') {
         console.log('this is cart')
       } else {
-        this.cartNotification = document.querySelector('cart-notification');
+//         this.cartNotification = document.querySelector('cart-notification');
       }
 //       this.cartNotification = document.querySelector('cart-notification');
     }
