@@ -304,7 +304,9 @@
                             </div>
                         </button>
                         {%- if block.settings.show_dynamic_checkout -%}
+                        {% comment %}
                           {{ form | payment_button }}
+                          {% endcomment %}
                         {%- endif -%}
                       </div>
                     {%- endform -%}
