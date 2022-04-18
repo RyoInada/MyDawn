@@ -114,7 +114,7 @@ async function insertContactForm() {
 			ＳＫＵ : ${focus[0].sku}
 			ＵＲＬ : ${location.origin + product.url}?variant=${param.variant}`.split('\n').map(l => l.trim()).join('\n');
   			console.log(str);
-			document.querySelector('[name="contact[Comment]"]').value = String(str);
+			document.querySelector('[name="contact[Comment]"]').value = str;
 		} 
   
 insertContactForm();  
