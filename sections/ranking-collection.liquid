@@ -102,7 +102,7 @@
 
             {%- if section.settings.rows > 1 -%}
               <div class="grid__item text-center{% if section.settings.mobile_scrollable %} small--hide{% endif %}">
-                <a href="{{ collections[section.settings.default_ranked_collection].url }}" class="btn" style="margin-bottom: 25px">{{ 'collections.general.all_of_collection' | t }}</a>
+                <a href="{{ collections[section.settings.default_ranked_collection].url }}" class="btn" style="margin-bottom: 25px">全て見る</a>
               </div>
             {%- endif -%}
 
@@ -200,7 +200,7 @@
 
             {%- if section.settings.rows > 1 -%}
               <div class="grid__item text-center{% if section.settings.mobile_scrollable %} small--hide{% endif %}">
-                <a href="{{ collections[block.settings.home_ranked_collection].url }}" class="btn" style="margin-bottom: 25px">{{ 'collections.general.all_of_collection' | t }}</a>
+                <a href="{{ collections[block.settings.home_ranked_collection].url }}" class="btn" style="margin-bottom: 25px">全て見る</a>
               </div>
             {%- endif -%}
 
